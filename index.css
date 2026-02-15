@@ -1,0 +1,220 @@
+/* === Base === */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fdfbf7;
+  color: #1e293b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* === Scrollbar === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* === Typography Prose (replaces @tailwindcss/typography) === */
+.prose p {
+  margin-bottom: 1.25em;
+  line-height: 1.8;
+}
+.prose strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+.prose blockquote {
+  border-left: 4px solid #3b82f6;
+  padding-left: 1.5rem;
+  font-style: italic;
+  color: #475569;
+  margin: 2rem 0;
+}
+.prose ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25em;
+}
+.prose li {
+  margin-bottom: 0.5em;
+}
+
+/* === Marker highlight === */
+.marker-highlight {
+  position: relative;
+  white-space: pre-wrap;
+}
+.marker-highlight::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -2px;
+  right: -2px;
+  background-color: #fef08a;
+  transform: rotate(-1deg) skewX(-2deg);
+  z-index: -1;
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+/* === CTA Pulse ring === */
+@keyframes ping-ring {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+.cta-pulse::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid currentColor;
+  animation: ping-ring 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* === Glass morphism === */
+.glass {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* === Gradient text === */
+.gradient-text {
+  background: linear-gradient(135deg, #2563eb 0%, #7c3aed 50%, #2563eb 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient 8s ease infinite;
+}
+
+@keyframes gradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* === Ticket perforated edge === */
+.ticket-edge {
+  background-image: radial-gradient(circle, transparent 4px, #1e293b 4px);
+  background-size: 20px 20px;
+}
+
+/* === Smooth reveal for details/summary === */
+details[open] > div {
+  animation: slideDown 0.3s ease-out;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* === Mobile bottom padding for fixed CTA === */
+@media (max-width: 767px) {
+  body {
+    padding-bottom: 80px;
+  }
+}
+
+/* === Photo styling === */
+.hero-photo {
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+}
+
+/* === Animated gradient border === */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, #2563eb, #7c3aed, #2563eb, #7c3aed);
+  background-size: 400% 400%;
+  animation: gradient 4s ease infinite;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+/* === Number counter animation === */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.count-up {
+  animation: countUp 0.6s ease-out forwards;
+}
+
+/* === Marquee === */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* === Animated gradient for glowing buttons === */
+@keyframes animGradient {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient {
+  animation: animGradient 3s ease infinite;
+}
+
+/* === Float animation === */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* === Slow pulse === */
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+/* === Tabular numbers for counters === */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* === Perspective for 3D tilt cards === */
+[style*="transformPerspective"] {
+  will-change: transform;
+}
+
+/* === Input focus styling === */
+input:focus {
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* === Calculator responsive === */
+@media (max-width: 640px) {
+  .grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+}

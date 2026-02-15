@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Влад Теслюк | Рентген Бизнеса — Выручка растёт, а ты нет?</title>
+    <meta name="description" content="Как перестать быть самым дорогим исполнителем в своём бизнесе и выкупить 10 часов жизни в неделю. Бесплатный разбор от Влада Теслюка." />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Выручка растёт, а ты — нет? | Влад Теслюк" />
+    <meta property="og:description" content="Как перестать быть самым дорогим исполнителем в своём бизнесе. Бесплатный Рентген + План на 90 дней." />
+    <meta property="og:image" content="/images/vlad-hero.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    
+    <!-- Telegram -->
+    <meta name="telegram:channel" content="@teslykww" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              serif: ['Merriweather', 'serif'],
+              hand: ['Caveat', 'cursive'],
+              mono: ['JetBrains Mono', 'monospace'],
+            },
+            colors: {
+              paper: '#fdfbf7',
+              ink: '#1e293b',
+              marker: '#fef08a',
+              'marker-blue': '#bae6fd',
+              accent: '#2563eb',
+              'accent-dark': '#1d4ed8',
+              telegram: '#2AABEE',
+              'telegram-dark': '#229ED9',
+            },
+            boxShadow: {
+              'hard': '4px 4px 0px 0px rgba(0,0,0,1)',
+              'hard-sm': '2px 2px 0px 0px rgba(0,0,0,1)',
+              'hard-blue': '4px 4px 0px 0px rgba(37,99,235,1)',
+              'glow': '0 0 40px rgba(37,99,235,0.15)',
+              'glow-lg': '0 0 80px rgba(37,99,235,0.2)',
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'pulse-slow': 'pulse 3s ease-in-out infinite',
+              'shake': 'shake 0.5s ease-in-out',
+              'gradient': 'gradient 8s ease infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-10px)' },
+              },
+              shake: {
+                '0%, 100%': { transform: 'translateX(0)' },
+                '25%': { transform: 'translateX(-5px)' },
+                '75%': { transform: 'translateX(5px)' },
+              },
+              gradient: {
+                '0%, 100%': { backgroundPosition: '0% 50%' },
+                '50%': { backgroundPosition: '100% 50%' },
+              },
+            }
+          }
+        }
+      }
+    </script>
+    <link rel="stylesheet" href="/index.css">
+  </head>
+  <body class="antialiased selection:bg-yellow-200 selection:text-black">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
