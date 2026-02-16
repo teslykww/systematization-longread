@@ -46,7 +46,7 @@ async function uploadToDir(client, remoteDir) {
     }
   }
   for (const f of files) {
-    const local = join(DIST, f);
+    let local = join(DIST, f);
     await client.uploadFrom(createReadStream(local), f);
     console.log('Uploaded:', f);
   }
@@ -58,38 +58,22 @@ async function main() {
   const host = process.env.FTP_HOST || '37.140.192.62';
   const user = process.env.FTP_USERNAME || 'u3416804';
   const pass = process.env.FTP_PASSWORD;
-  const target = process.argv[2]; // '1' | '2' | 'subdomains' | undefined
-
   if (!pass) {
     console.error('Set FTP_PASSWORD in .env.local or environment');
     process.exit(1);
   }
 
-  // FTP root = www level (has vlad4you.ru content + 1.vlad4you.ru, 2.vlad4you.ru)
-  const dirs = [];
-  if (target === '1') {
-    dirs.push(process.env.FTP_REMOTE_DIR_1 || '1.vlad4you.ru');
-  } else if (target === '2') {
-    dirs.push(process.env.FTP_REMOTE_DIR_2 || '2.vlad4you.ru');
-  } else if (target === 'subdomains' || target === 'all') {
-    if (target === 'all') dirs.push('.');
-    dirs.push(process.env.FTP_REMOTE_DIR_1 || '1.vlad4you.ru');
-    dirs.push(process.env.FTP_REMOTE_DIR_2 || '2.vlad4you.ru');
-  } else {
-    dirs.push(process.env.FTP_REMOTE_DIR || '.');
-  }
+  const remoteDir = process.env.FTP_REMOTE_DIR || '.';
 
   const client = new Client(60000);
   client.ftp.verbose = false;
 
   try {
     await client.access({ host, user, password: pass, secure: false });
-    for (const remoteDir of dirs) {
-      console.log('\n--- Deploy to', remoteDir, '---');
-      await client.cd('/');
-      await uploadToDir(client, remoteDir);
-    }
-    console.log('\nDeploy done.');
+    console.log('Deploy to', remoteDir);
+    await client.cd('/');
+    await uploadToDir(client, remoteDir);
+    console.log('Deploy done.');
   } catch (e) {
     console.error('Deploy failed:', e.message);
     process.exit(1);

@@ -23,7 +23,8 @@ async function main() {
     process.exit(1);
   }
 
-  const dirs = ['1.vlad4you.ru', '2.vlad4you.ru'];
+  // «В поддиректории»: 1.vlad4you.ru → ./1, 2.vlad4you.ru → ./2
+  const dirs = ['1', '2'];
   const client = new Client(60000);
 
   try {

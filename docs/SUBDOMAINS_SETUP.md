@@ -1,26 +1,12 @@
-# Настройка поддоменов 1.vlad4you.ru и 2.vlad4you.ru
+# A/B варианты
 
-## Шаг 1. Создать папки (если ещё нет)
+Один SPA, разные маршруты:
 
-Выполни один раз:
+- **vlad4you.ru/** и **vlad4you.ru/1** → App (вариант 1)
+- **vlad4you.ru/2** → Long2 с Workbook (вариант 2)
 
-```bash
-node scripts/create-subdomain-dirs.mjs
-```
-
-Либо вручную в **Менеджер файлов** Reg.ru: в корне создай папки `1.vlad4you.ru` и `2.vlad4you.ru`.
-
-## Шаг 2. Проверь «Автоподдомены»
-
-В настройках домена vlad4you.ru должна быть включена опция **«Автоподдомены»** → **«В отдельной директории»**.
-
-## Шаг 3. Деплой
+## Деплой
 
 ```bash
-npm run deploy:subdomains
+npm run deploy
 ```
-
-## Результат
-
-- **1.vlad4you.ru** — вариант 1 (App, главная)
-- **2.vlad4you.ru** — вариант 2 (Long2, Workbook)

@@ -1,28 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import Long2 from './Long2';
 
-// 1.vlad4you.ru → App (вариант 1), 2.vlad4you.ru → Long2 (вариант 2)
-function getPageVariant(): '1' | '2' {
-  const host = typeof window !== 'undefined' ? window.location.hostname : '';
-  if (host === '1.vlad4you.ru') return '1';
-  if (host === '2.vlad4you.ru') return '2';
-  const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-  if (params?.get('v') === '2') return '2';
-  return '1';
-}
-
-const Page = getPageVariant() === '2' ? Long2 : App;
-
+// vlad4you.ru/ и /1 → App. vlad4you.ru/2 → Long2 с Workbook.
 const rootElement = document.getElementById('root');
-if (!rootElement) {
-  throw new Error("Could not find root element to mount to");
-}
+if (!rootElement) throw new Error("Could not find root element");
 
-const root = ReactDOM.createRoot(rootElement);
-root.render(
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <Page />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/1" element={<App />} />
+        <Route path="/2" element={<Long2 />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
