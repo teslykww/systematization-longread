@@ -72,7 +72,7 @@ export default function SqueezePage() {
                 <img src="/images/artifacts/pl-calendar.png" alt="Шаблон P&L и платёжного календаря" />
               </div>
               <div className="squeeze-mockup squeeze-mockup-2">
-                <img src="/images/artifacts/traction-map.png" alt="Матрица делегирования" />
+                <img src="/images/artifacts/delegation-matrix.png" alt="Матрица делегирования" />
               </div>
               <div className="squeeze-mockup squeeze-mockup-3">
                 <img src="/images/artifacts/traction-map.png" alt="Трекшн-карта" />
@@ -102,7 +102,7 @@ export default function SqueezePage() {
 
           <div className="squeeze-card">
             <div className="squeeze-card-screenshot">
-              <img src="/images/artifacts/traction-map.png" alt="Матрица делегирования" />
+              <img src="/images/artifacts/delegation-matrix.png" alt="Матрица делегирования" />
             </div>
             <h3 className="squeeze-card-head">⚙️ Матрица делегирования</h3>
             <p className="squeeze-card-desc">

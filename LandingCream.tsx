@@ -213,7 +213,7 @@ export default function LandingCream() {
             <p className="artifact-intro">Каждая гипотеза команды проходит через 4 шага: Гипотеза → Действие → Метрика → Итог.</p>
             <div className="artifact-placeholder">
               <div className="artifact-placeholder-inner">
-                <img src="/images/artifacts/traction-map.png" alt="Трекшн-карта: гипотезы, метрики, план недели" />
+                <img src="/images/artifacts/delegation-matrix.png" alt="Матрица делегирования" />
               </div>
               <span className="artifact-caption">Матрица делегирования</span>
             </div>
