@@ -202,9 +202,9 @@ export default function LandingCream() {
             <p className="method-item-desc"><strong>Внедрим</strong> единый дашборд: <strong>P&L (отчёт о прибылях и убытках)</strong>, ключевые метрики, движение денег. Ты <strong>будешь точно</strong> видеть, где горит — а не гадать по звонкам менеджеров.</p>
             <div className="artifact-placeholder">
               <div className="artifact-placeholder-inner">
-                <img src="/images/artifacts/dashboard.png" alt="Дашборд: P&L, план/факт, воронка продаж" />
+                <img src="/images/artifacts/pl-calendar.png" alt="Шаблон P&L и платёжного календаря" />
               </div>
-              <span className="artifact-caption">P&L / дашборд</span>
+              <span className="artifact-caption">P&L / платёжный календарь</span>
             </div>
           </div>
           <div className="method-item ani d4">
