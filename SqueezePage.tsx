@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SqueezePage.css';
 
 const TELEGRAM_BOT_URL = 'https://t.me/teslykww';
@@ -49,30 +49,90 @@ const IconSprint = () => (
   </svg>
 );
 
+/* Рукописная SVG-стрелка (как у конкурентов) */
+const ArrowCta = () => (
+  <svg className="squeeze-arrow-cta" viewBox="0 0 48 40" fill="none" width="48" height="40">
+    <path
+      d="M4 8 C10 4, 24 2, 36 14 C40 18, 42 24, 38 30"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+      fill="none"
+    />
+    <path
+      d="M32 28 L38 30 L36 22"
+      stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+      fill="none"
+    />
+  </svg>
+);
+
 export default function SqueezePage() {
+  useEffect(() => {
+    const els = document.querySelectorAll('.sq-anim');
+    if (!els.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            (e.target as HTMLElement).classList.add('sq-anim--in');
+            io.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div className="squeeze-page">
-      {/* Экран 1 — тёмный hero */}
+      {/* ══════════════════════════ HERO ══════════════════════════ */}
       <section className="squeeze-hero">
+        {/* Зернистый overlay для текстуры */}
+        <div className="squeeze-hero-noise" aria-hidden="true" />
+        {/* Ambient свечения */}
+        <div className="squeeze-glow squeeze-glow-1" aria-hidden="true" />
+        <div className="squeeze-glow squeeze-glow-2" aria-hidden="true" />
+
         <div className="squeeze-hero-inner">
+          {/* ── Текстовая колонка ── */}
           <div className="squeeze-hero-text">
-            <div className="squeeze-author-line">
+            <div className="squeeze-author-line sq-anim sq-anim--fade-right">
               <div className="squeeze-author-avatar">
                 <img src="/images/vlad-hero.png" alt="Влад Теслюк" />
               </div>
               <div>
                 <p className="squeeze-name">Влад Теслюк</p>
-                <p className="squeeze-role">Архитектор бизнес-систем · 12+ лет</p>
+                <p className="squeeze-role">Архитектор бизнес-систем · 12&nbsp;лет</p>
               </div>
             </div>
-            <p className="squeeze-mirror">Ты уже умеешь зарабатывать. Но бизнес всё ещё зависит от тебя лично — и это не норма.</p>
-            <p className="squeeze-segment">Для собственников с прибылью от 1 млн ₽ в месяц</p>
-            <h1 className="squeeze-title">Бизнес работает.<br />Ты — не отдыхаешь.</h1>
-            <p className="squeeze-sub">
-              3 шаблона, которые помогут увидеть, где теряются деньги, передать команде ответственность и управлять бизнесом по цифрам — а не по ощущениям.
+
+            <p className="squeeze-mirror sq-anim sq-anim--fade-up" style={{ animationDelay: '0.1s' }}>
+              Ты уже умеешь зарабатывать. Но бизнес всё ещё зависит от тебя лично — и это не норма.
             </p>
-            <p className="squeeze-what">Что внутри:</p>
-            <ul className="squeeze-bullets">
+
+            <p className="squeeze-segment sq-anim sq-anim--fade-up" style={{ animationDelay: '0.15s' }}>
+              Для собственников с прибылью от 1&nbsp;млн&nbsp;₽ в месяц
+            </p>
+
+            {/* Двухцветный заголовок */}
+            <h1 className="squeeze-title sq-anim sq-anim--fade-up" style={{ animationDelay: '0.2s' }}>
+              Бизнес работает.<br />
+              <span className="squeeze-title-accent">Ты — не отдыхаешь.</span>
+            </h1>
+
+            {/* Акцентная вертикальная линия + подзаголовок */}
+            <div className="squeeze-sub-wrap sq-anim sq-anim--fade-up" style={{ animationDelay: '0.28s' }}>
+              <span className="squeeze-sub-line" aria-hidden="true" />
+              <p className="squeeze-sub">
+                3 шаблона: увидишь где теряются деньги, передашь команде ответственность и перейдёшь на управление по цифрам — а не по ощущениям.
+              </p>
+            </div>
+
+            <p className="squeeze-what sq-anim sq-anim--fade-up" style={{ animationDelay: '0.33s' }}>
+              ЧТО ВНУТРИ
+            </p>
+            <ul className="squeeze-bullets sq-anim sq-anim--fade-up" style={{ animationDelay: '0.38s' }}>
               <li>
                 <span className="squeeze-bullet-icon"><IconPL /></span>
                 <span><strong>Шаблон P&L</strong> — увидишь, где прячется твоя реальная маржа</span>
@@ -86,18 +146,30 @@ export default function SqueezePage() {
                 <span><strong>Шаблон трекшн-карты</strong> — 60 минут в неделю вместо ежедневного контроля</span>
               </li>
             </ul>
-            <a href={TELEGRAM_BOT_URL} className="squeeze-cta" target="_blank" rel="noopener noreferrer">
-              <TelegramIcon />
-              Забрать шаблоны в Telegram
-            </a>
-            <p className="squeeze-micro">Нажимаешь → переходишь в Telegram → получаешь шаблоны</p>
-            <div className="squeeze-checks">
-              <span><TickIcon /> Бесплатно</span>
-              <span><TickIcon /> Без звонков</span>
-              <span><TickIcon /> Без обязательств</span>
+
+            {/* CTA с рукописной стрелкой */}
+            <div className="squeeze-cta-wrap sq-anim sq-anim--fade-up" style={{ animationDelay: '0.45s' }}>
+              <ArrowCta />
+              <div className="squeeze-cta-col">
+                <a href={TELEGRAM_BOT_URL} className="squeeze-cta" target="_blank" rel="noopener noreferrer">
+                  {/* Blur-гло позади кнопки */}
+                  <span className="squeeze-cta-glow" aria-hidden="true" />
+                  <TelegramIcon />
+                  Забрать шаблоны в Telegram
+                </a>
+                <p className="squeeze-micro">Нажимаешь → переходишь в Telegram → получаешь шаблоны</p>
+                <div className="squeeze-checks">
+                  <span><TickIcon /> Бесплатно</span>
+                  <span><TickIcon /> Без звонков</span>
+                  <span><TickIcon /> Без обязательств</span>
+                </div>
+              </div>
             </div>
           </div>
+
+          {/* ── Визуальная колонка: фото + мокапы ── */}
           <div className="squeeze-hero-visual">
+            {/* Фото «вылезает» вверх за пределы секции */}
             <div className="squeeze-photo-wrap">
               <img src="/images/vlad-summit.png" alt="Влад Теслюк" />
             </div>
@@ -116,67 +188,62 @@ export default function SqueezePage() {
         </div>
       </section>
 
-      {/* Экран 2 — карточки инструментов */}
+      {/* ══════════════════════════ КАРТОЧКИ ══════════════════════════ */}
       <section className="squeeze-cards">
         <div className="squeeze-cards-inner">
-          <h2 className="squeeze-cards-title">Что именно ты получишь</h2>
+          <h2 className="squeeze-cards-title sq-anim sq-anim--fade-up">Что именно ты получишь</h2>
 
-          <div className="squeeze-card">
-            <div className="squeeze-card-screenshot">
-              <img src="/images/artifacts/pl-calendar.png" alt="Шаблон P&L" />
+          {[
+            {
+              screenshot: '/images/artifacts/pl-calendar.png',
+              alt: 'Шаблон P&L',
+              icon: <IconPL />,
+              head: 'Шаблон P&L и платёжного календаря',
+              desc: 'Открываешь файл и видишь бизнес в цифрах: где горит маржа, где заморожены деньги, какие продукты тянут вниз.',
+              result: '+20% маржа за 3 месяца',
+              quote: '«Убрал 3 продукта, которые работали в минус — и цифры сразу встали на место»',
+              cite: 'Михаил · мебельное производство',
+            },
+            {
+              screenshot: '/images/artifacts/delegation-matrix.png',
+              alt: 'Матрица делегирования',
+              icon: <IconDelegate />,
+              head: 'Матрица делегирования',
+              desc: 'Перестаёшь быть диспетчером. Сотрудники приходят не с вопросом «что делать?», а с вариантами решений.',
+              result: '20 → 100 менеджеров на удалёнке',
+              quote: '«Я перестал тащить каждого на себе. Команда работает сама.»',
+              cite: 'Роман Шолохов · B2B-продажи',
+            },
+            {
+              screenshot: '/images/artifacts/traction-map.png',
+              alt: 'Трекшн-карта',
+              icon: <IconSprint />,
+              head: 'Шаблон трекшн-карты',
+              desc: '60 минут в понедельник — и неделя под контролем. Измеримые задачи, конкретный результат в пятницу.',
+              result: '2–4 часа в день при 1.5 млн чистыми',
+              quote: '«Только жёсткий недельный ритм — и я вышел из операционки.»',
+              cite: 'Андрей · маркетинговое агентство, 5 человек',
+            },
+          ].map((card, i) => (
+            <div className="squeeze-card sq-anim sq-anim--fade-up" key={i} style={{ animationDelay: `${i * 0.1}s` }}>
+              <div className="squeeze-card-screenshot">
+                <img src={card.screenshot} alt={card.alt} />
+              </div>
+              <div className="squeeze-card-body">
+                <div className="squeeze-card-icon">{card.icon}</div>
+                <h3 className="squeeze-card-head">{card.head}</h3>
+                <p className="squeeze-card-desc">{card.desc}</p>
+                <blockquote className="squeeze-card-quote">
+                  <span className="squeeze-card-quote-result">{card.result}</span>
+                  <p>{card.quote}</p>
+                  <cite>{card.cite}</cite>
+                </blockquote>
+              </div>
             </div>
-            <div className="squeeze-card-body">
-              <div className="squeeze-card-icon"><IconPL /></div>
-              <h3 className="squeeze-card-head">Шаблон P&L и платёжного календаря</h3>
-              <p className="squeeze-card-desc">
-                Открываешь файл и видишь бизнес в цифрах: где горит маржа, где заморожены деньги, какие продукты тянут вниз.
-              </p>
-              <blockquote className="squeeze-card-quote">
-                <span className="squeeze-card-quote-result">+20% маржа за 3 месяца</span>
-                <p>«Убрал 3 продукта, которые работали в минус — и цифры сразу встали на место»</p>
-                <cite>Михаил · мебельное производство</cite>
-              </blockquote>
-            </div>
-          </div>
+          ))}
 
-          <div className="squeeze-card">
-            <div className="squeeze-card-screenshot">
-              <img src="/images/artifacts/delegation-matrix.png" alt="Матрица делегирования" />
-            </div>
-            <div className="squeeze-card-body">
-              <div className="squeeze-card-icon"><IconDelegate /></div>
-              <h3 className="squeeze-card-head">Матрица делегирования</h3>
-              <p className="squeeze-card-desc">
-                Перестаёшь быть диспетчером. Сотрудники приходят не с вопросом «что делать?», а с вариантами решений.
-              </p>
-              <blockquote className="squeeze-card-quote">
-                <span className="squeeze-card-quote-result">20 → 100 менеджеров на удалёнке</span>
-                <p>«Я перестал тащить каждого на себе. Команда работает сама.»</p>
-                <cite>Роман Шолохов · B2B-продажи</cite>
-              </blockquote>
-            </div>
-          </div>
-
-          <div className="squeeze-card">
-            <div className="squeeze-card-screenshot">
-              <img src="/images/artifacts/traction-map.png" alt="Трекшн-карта" />
-            </div>
-            <div className="squeeze-card-body">
-              <div className="squeeze-card-icon"><IconSprint /></div>
-              <h3 className="squeeze-card-head">Шаблон трекшн-карты</h3>
-              <p className="squeeze-card-desc">
-                60 минут в понедельник — и неделя под контролем. Измеримые задачи, конкретный результат в пятницу.
-              </p>
-              <blockquote className="squeeze-card-quote">
-                <span className="squeeze-card-quote-result">2–4 часа в день при 1.5 млн чистыми</span>
-                <p>«Только жёсткий недельный ритм — и я вышел из операционки.»</p>
-                <cite>Андрей · маркетинговое агентство, команда 5 человек</cite>
-              </blockquote>
-            </div>
-          </div>
-
-          {/* Блок доверия с крупными метриками */}
-          <div className="squeeze-trust-block">
+          {/* Блок доверия */}
+          <div className="squeeze-trust-block sq-anim sq-anim--fade-up">
             <div className="squeeze-metrics-row">
               <div className="squeeze-metric">
                 <span className="squeeze-metric-num">300+</span>
@@ -199,14 +266,18 @@ export default function SqueezePage() {
             <p className="squeeze-trust-logos-label">BMW · Shell · Роза Хутор · SuperJob · Архыз · SAP и другие</p>
           </div>
 
-          <a href={TELEGRAM_BOT_URL} className="squeeze-cta squeeze-cta-second" target="_blank" rel="noopener noreferrer">
-            <TelegramIcon />
-            Забрать шаблоны бесплатно
-          </a>
-          <div className="squeeze-checks squeeze-checks-center">
-            <span><TickIcon /> Бесплатно</span>
-            <span><TickIcon /> Без звонков от отдела продаж</span>
-            <span><TickIcon /> Отписка в 1 клик</span>
+          {/* Финальный CTA */}
+          <div className="squeeze-final-cta-wrap sq-anim sq-anim--fade-up">
+            <a href={TELEGRAM_BOT_URL} className="squeeze-cta squeeze-cta-second" target="_blank" rel="noopener noreferrer">
+              <span className="squeeze-cta-glow" aria-hidden="true" />
+              <TelegramIcon />
+              Забрать шаблоны бесплатно
+            </a>
+            <div className="squeeze-checks squeeze-checks-center">
+              <span><TickIcon /> Бесплатно</span>
+              <span><TickIcon /> Без звонков от отдела продаж</span>
+              <span><TickIcon /> Отписка в 1 клик</span>
+            </div>
           </div>
         </div>
       </section>
