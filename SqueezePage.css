@@ -1,18 +1,29 @@
-/* Squeeze Page — подписная страница на 2 экрана */
+/* Squeeze Page v2 — конверсионная подписная страница */
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
 
 .squeeze-page {
-  --cream: #f4f6f8;
+  --dark:    #0c1220;
+  --dark-2:  #141d2e;
+  --dark-3:  #1e2d42;
+  --dark-b:  rgba(255,255,255,0.08);
+  --dark-b2: rgba(255,255,255,0.14);
+  --cream:   #f4f6f8;
   --cream-d: #e1e4e8;
-  --paper: #ffffff;
-  --ink: #0f172a;
-  --ink-2: #334155;
-  --ink-3: #475569;
-  --ink-4: #94a3b8;
-  --gold: #2563eb;
-  --tg: #2AABEE;
-  --tg-bg: rgba(42, 171, 238, 0.12);
-  --shadow-m: 0 6px 32px rgba(15, 23, 42, 0.10);
-  --r: 12px;
+  --paper:   #ffffff;
+  --ink:     #0f172a;
+  --ink-2:   #334155;
+  --ink-3:   #475569;
+  --ink-4:   #94a3b8;
+  --accent:  #2AABEE;
+  --accent-2:#1a8fc9;
+  --accent-glow: rgba(42,171,238,0.35);
+  --gold:    #f5a623;
+  --green:   #22c55e;
+  --r:       12px;
+  --r-l:     20px;
+  --shadow-m: 0 6px 32px rgba(15,23,42,0.12);
+  --shadow-l: 0 20px 60px rgba(15,23,42,0.18);
 
   font-family: 'Manrope', sans-serif;
   background: var(--paper);
@@ -24,214 +35,296 @@
 }
 
 .squeeze-page img { max-width: 100%; display: block; }
-.squeeze-page a { color: inherit; text-decoration: none; }
+.squeeze-page a   { color: inherit; text-decoration: none; }
 
-/* ═══ Экран 1 — первый разворот (текст слева, фото+скрины справа) ═══ */
+/* ═══════════════════════════════════════════
+   HERO — тёмный первый экран
+═══════════════════════════════════════════ */
 .squeeze-hero {
+  background: var(--dark);
   min-height: 100vh;
   display: flex;
   align-items: center;
-  padding: 24px 20px 32px;
+  padding: 32px 24px 40px;
+  position: relative;
+  overflow: hidden;
 }
+
+/* тонкий градиентный highlight сверху */
+.squeeze-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.7;
+}
+
+/* лёгкое свечение в углу */
+.squeeze-hero::after {
+  content: '';
+  position: absolute;
+  top: -120px; right: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,171,238,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 .squeeze-hero-inner {
-  max-width: 1000px;
+  max-width: 1020px;
   margin: 0 auto;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  grid-template-columns: 1fr 420px;
+  gap: 56px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
-.squeeze-hero-text {
-  min-width: 0;
+
+/* ─── Автор-строка ─── */
+.squeeze-author-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.squeeze-author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 2px solid var(--dark-b2);
+}
+.squeeze-author-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
 }
 .squeeze-name {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
-  color: var(--ink);
+  color: #fff;
   margin: 0 0 2px;
 }
 .squeeze-role {
-  font-size: 13px;
-  color: var(--ink-4);
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin: 0;
+}
+
+/* ─── Фраза-зеркало ─── */
+.squeeze-mirror {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
   margin: 0 0 16px;
+  font-style: italic;
+  border-left: 2px solid var(--accent);
+  padding-left: 14px;
 }
+
+/* ─── Сегмент-бейдж ─── */
 .squeeze-segment {
-  font-size: 13px;
-  color: var(--ink-3);
+  display: inline-flex;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  background: rgba(42,171,238,0.12);
+  border: 1px solid rgba(42,171,238,0.3);
+  border-radius: 999px;
+  padding: 5px 12px;
   margin: 0 0 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--cream-d);
+  letter-spacing: 0.02em;
 }
+
+/* ─── Заголовок ─── */
 .squeeze-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(26px, 5vw, 34px);
+  font-size: clamp(36px, 5.5vw, 52px);
   font-weight: 800;
-  line-height: 1.2;
-  color: var(--ink);
-  margin: 0 0 16px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin: 0 0 20px;
 }
+
+/* ─── Подзаголовок ─── */
 .squeeze-sub {
   font-size: 16px;
-  color: var(--ink-2);
-  line-height: 1.65;
-  margin: 0 0 24px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin: 0 0 28px;
 }
+
+/* ─── «Что внутри» ─── */
 .squeeze-what {
-  font-size: 14px;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--ink);
-  margin: 0 0 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0 0 14px;
 }
+
 .squeeze-bullets {
   list-style: none;
-  margin: 0 0 28px;
+  margin: 0 0 32px;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 .squeeze-bullets li {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 12px;
+  gap: 14px;
   font-size: 15px;
-  color: var(--ink-2);
+  color: rgba(255,255,255,0.8);
   line-height: 1.5;
+  background: var(--dark-3);
+  border: 1px solid var(--dark-b);
+  border-radius: 10px;
+  padding: 12px 16px;
 }
+.squeeze-bullets strong { color: #fff; }
 .squeeze-bullet-icon {
   flex-shrink: 0;
-  font-size: 18px;
+  color: var(--accent);
+  margin-top: 1px;
 }
-.squeeze-bullets strong { color: var(--ink); }
+
+/* ─── CTA кнопка ─── */
 .squeeze-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   width: 100%;
-  max-width: 320px;
-  background: var(--tg);
+  max-width: 340px;
+  background: var(--accent);
   color: #fff !important;
   font-weight: 700;
   font-size: 16px;
-  padding: 16px 24px;
+  padding: 18px 28px;
   border-radius: 50px;
-  box-shadow: 0 8px 24px rgba(42, 171, 238, 0.35);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 8px 28px var(--accent-glow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 .squeeze-cta:hover {
+  background: var(--accent-2);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(42, 171, 238, 0.4);
+  box-shadow: 0 14px 36px rgba(42,171,238,0.45);
 }
+
+/* ─── Микро-подпись ─── */
 .squeeze-micro {
-  font-size: 13px;
-  color: var(--ink-4);
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
   margin: 12px 0 0;
 }
+
+/* ─── Чекмарки ─── */
 .squeeze-checks {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 24px;
+  gap: 14px 20px;
   margin-top: 20px;
-  font-size: 14px;
-  color: var(--ink-3);
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
 }
 .squeeze-checks span {
   display: inline-flex;
   align-items: center;
   gap: 6px;
 }
-.squeeze-checks svg { flex-shrink: 0; color: var(--gold); }
-.squeeze-trust-line {
-  font-size: 13px;
-  color: var(--ink-4);
-  margin: 20px 0 0;
-}
+.squeeze-checks svg { flex-shrink: 0; color: var(--green); }
 
-/* Правая колонка: фото + мокапы шаблонов */
+/* ─── Правая колонка: фото + мокапы ─── */
 .squeeze-hero-visual {
   position: relative;
-  min-height: 320px;
+  height: 460px;
 }
 .squeeze-photo-wrap {
-  border-radius: var(--r);
-  overflow: hidden;
-  box-shadow: var(--shadow-m);
+  position: absolute;
+  top: 0; left: 0;
+  width: 78%;
   aspect-ratio: 3/4;
-  max-width: 280px;
-  margin: 0 auto;
+  border-radius: var(--r-l);
+  overflow: hidden;
+  box-shadow: var(--shadow-l);
+  border: 1px solid var(--dark-b);
 }
 .squeeze-photo-wrap img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
 }
 .squeeze-mockups {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  max-width: 200px;
-  margin-left: auto;
+  bottom: 0; right: 0;
+  width: 55%;
 }
 .squeeze-mockup {
   position: absolute;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
-  border: 1px solid var(--cream-d);
-  background: var(--paper);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.12);
+  background: var(--dark-2);
 }
 .squeeze-mockup img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
 }
 .squeeze-mockup-1 {
-  width: 72%;
-  aspect-ratio: 4/3;
-  right: 0;
-  bottom: 0;
-  z-index: 2;
+  width: 80%;
+  aspect-ratio: 16/10;
+  right: 0; bottom: 0;
+  z-index: 3;
 }
 .squeeze-mockup-2 {
-  width: 58%;
-  aspect-ratio: 4/3;
-  right: 18%;
-  bottom: 28%;
-  z-index: 1;
-  transform: rotate(-6deg);
+  width: 64%;
+  aspect-ratio: 16/10;
+  right: 16%; bottom: 38%;
+  z-index: 2;
+  transform: rotate(-5deg);
 }
 .squeeze-mockup-3 {
-  width: 48%;
-  aspect-ratio: 4/3;
-  right: 42%;
-  bottom: 48%;
-  z-index: 0;
+  width: 52%;
+  aspect-ratio: 16/10;
+  right: 34%; bottom: 64%;
+  z-index: 1;
   transform: rotate(4deg);
 }
 
-/* ═══ Экран 2 — карточки + доверие + вторая CTA ═══ */
+/* ═══════════════════════════════════════════
+   ЭКРАН 2 — карточки инструментов
+═══════════════════════════════════════════ */
 .squeeze-cards {
   background: var(--cream);
-  padding: 48px 20px 56px;
+  padding: 64px 24px 72px;
   border-top: 1px solid var(--cream-d);
 }
 .squeeze-cards-inner {
-  max-width: 600px;
+  max-width: 640px;
   margin: 0 auto;
 }
 .squeeze-cards-title {
   font-family: 'Playfair Display', serif;
-  font-size: clamp(22px, 4vw, 26px);
+  font-size: clamp(24px, 4vw, 30px);
   font-weight: 800;
+  letter-spacing: -0.01em;
   color: var(--ink);
-  margin: 0 0 32px;
+  margin: 0 0 36px;
 }
+
+/* ─── Карточка инструмента ─── */
 .squeeze-card {
   background: var(--paper);
-  border-radius: var(--r);
-  padding: 0 0 24px;
-  margin-bottom: 20px;
+  border-radius: var(--r-l);
+  margin-bottom: 24px;
   box-shadow: var(--shadow-m);
   border: 1px solid var(--cream-d);
   overflow: hidden;
@@ -241,77 +334,148 @@
   aspect-ratio: 16/9;
   overflow: hidden;
   background: var(--cream);
-  margin-bottom: 20px;
 }
 .squeeze-card-screenshot img {
-  width: 100%;
-  height: 100%;
+  width: 100%; height: 100%;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.squeeze-card:hover .squeeze-card-screenshot img {
+  transform: scale(1.02);
+}
+.squeeze-card-body {
+  padding: 24px 28px 28px;
+}
+.squeeze-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  background: rgba(42,171,238,0.08);
+  border: 1px solid rgba(42,171,238,0.2);
+  border-radius: 10px;
+  color: var(--accent);
+  margin-bottom: 14px;
 }
 .squeeze-card-head {
-  padding: 0 24px;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   color: var(--ink);
-  margin: 0 0 12px;
-  line-height: 1.35;
+  margin: 0 0 10px;
+  line-height: 1.3;
 }
 .squeeze-card-desc {
   font-size: 15px;
   color: var(--ink-2);
-  line-height: 1.6;
-  margin: 0 24px 14px;
+  line-height: 1.65;
+  margin: 0 0 20px;
 }
-.squeeze-card-case {
-  font-size: 14px;
-  color: var(--ink-3);
-  line-height: 1.55;
-  margin: 0 24px 0;
-  padding: 12px 24px 0;
-  border-top: 1px solid var(--cream-d);
+
+/* ─── Цитата-кейс ─── */
+.squeeze-card-quote {
+  margin: 0;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #f8faff 0%, #f0f4ff 100%);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r) var(--r) 0;
 }
-.squeeze-trust-block {
-  text-align: center;
-  margin: 36px 0 32px;
-  padding: 24px 16px;
-  background: var(--paper);
-  border-radius: var(--r);
-  border: 1px solid var(--cream-d);
-}
-.squeeze-trust-stats {
-  font-size: 15px;
-  color: var(--ink-2);
-  line-height: 1.6;
-  margin: 0 0 12px;
-}
-.squeeze-trust-logos-label {
+.squeeze-card-quote-result {
+  display: inline-block;
   font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(42,171,238,0.1);
+  border-radius: 4px;
+  padding: 2px 8px;
+  margin-bottom: 8px;
+  letter-spacing: 0.01em;
+}
+.squeeze-card-quote p {
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.55;
+  margin: 0 0 6px;
+  font-style: italic;
+}
+.squeeze-card-quote cite {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
   color: var(--ink-4);
-  margin: 0 0 16px;
+}
+
+/* ─── Блок доверия с крупными метриками ─── */
+.squeeze-trust-block {
+  background: var(--dark);
+  border-radius: var(--r-l);
+  padding: 36px 32px;
+  margin: 36px 0 40px;
+}
+.squeeze-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.squeeze-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.squeeze-metric-num {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 6vw, 48px);
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.squeeze-metric-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.4;
+  font-weight: 500;
 }
 .squeeze-logos-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 20px 24px;
+  gap: 16px 24px;
+  margin-bottom: 16px;
 }
 .squeeze-logos-row img {
-  height: 32px;
+  height: 28px;
   width: auto;
-  max-width: 80px;
+  max-width: 72px;
   object-fit: contain;
-  opacity: 0.85;
+  opacity: 0.6;
+  filter: brightness(10);
 }
-.squeeze-cta-second {
-  display: inline-flex;
-  margin: 0 auto 20px;
-}
-.squeeze-cards-inner > .squeeze-checks {
-  justify-content: center;
+.squeeze-trust-logos-label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  margin: 0;
 }
 
-/* Footer */
+/* ─── Финальный CTA ─── */
+.squeeze-cta-second {
+  display: flex;
+  margin: 0 auto 20px;
+  max-width: 380px;
+}
+.squeeze-checks-center {
+  justify-content: center;
+  color: var(--ink-3);
+}
+.squeeze-checks-center svg {
+  color: var(--accent);
+}
+
+/* ─── Футер ─── */
 .squeeze-footer {
   padding: 24px 20px;
   text-align: center;
@@ -321,101 +485,75 @@
 }
 .squeeze-footer p { margin: 0; }
 
-/* Sticky CTA — только на мобильных */
+/* ─── Sticky CTA (только мобильные) ─── */
 .squeeze-sticky-cta {
   display: none;
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  bottom: 0; left: 0; right: 0;
   z-index: 100;
-  background: var(--tg);
+  background: var(--accent);
   color: #fff !important;
   font-weight: 700;
   font-size: 15px;
-  padding: 14px 20px;
+  padding: 15px 20px;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 -4px 24px rgba(42,171,238,0.3);
 }
 @media (max-width: 768px) {
   .squeeze-sticky-cta { display: flex; }
 }
 
-/* Мобильные */
-@media (max-width: 768px) {
+/* ═══════════════════════════════════════════
+   АДАПТИВ
+═══════════════════════════════════════════ */
+@media (max-width: 900px) {
   .squeeze-hero-inner {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 40px;
   }
-  .squeeze-hero-text { text-align: left; }
   .squeeze-hero-visual {
-    min-height: auto;
-    width: fit-content;
-    margin: 4px auto 0;
-  }
-  .squeeze-photo-wrap {
-    max-width: 184px;
+    order: -1;
+    height: 320px;
+    max-width: 420px;
     margin: 0 auto;
-  }
-  .squeeze-mockups {
-    position: absolute;
-    right: -14px;
-    bottom: -16px;
-    width: 96px;
-    max-width: none;
-    margin: 0;
-  }
-  .squeeze-mockup-1 {
-    position: relative;
     width: 100%;
-    right: auto;
-    left: auto;
-    bottom: auto;
-    transform: none;
   }
-  .squeeze-mockup-2,
-  .squeeze-mockup-3 {
-    display: none;
-  }
-  .squeeze-cta { margin: 0; }
-  .squeeze-micro { text-align: left; }
-  .squeeze-checks { justify-content: flex-start; }
-  .squeeze-trust-line { text-align: left; }
+  .squeeze-photo-wrap { width: 60%; }
+  .squeeze-mockups { width: 50%; }
 }
+
 @media (max-width: 640px) {
-  .squeeze-hero { padding: 16px 16px 28px; min-height: auto; padding-bottom: 80px; }
-  .squeeze-name { margin-bottom: 4px; }
-  .squeeze-role { margin-bottom: 10px; }
-  .squeeze-segment {
-    display: inline-flex;
-    align-items: center;
-    font-size: 12px;
-    color: var(--ink-3);
-    background: var(--cream);
-    border: 1px solid var(--cream-d);
-    border-radius: 999px;
-    padding: 6px 10px;
-    margin: 0 0 14px;
+  .squeeze-hero {
+    padding: 20px 16px 88px;
+    min-height: auto;
   }
-  .squeeze-title { font-size: 24px; }
-  .squeeze-sub { font-size: 15px; margin-bottom: 18px; }
-  .squeeze-what { margin-bottom: 10px; }
-  .squeeze-bullets { margin-bottom: 20px; }
-  .squeeze-bullets li {
-    gap: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.45;
+  .squeeze-hero-visual {
+    height: 240px;
+    max-width: 320px;
   }
+  .squeeze-photo-wrap { width: 65%; }
+  .squeeze-mockups { width: 52%; }
+  .squeeze-mockup-2, .squeeze-mockup-3 { display: none; }
+  .squeeze-mockup-1 { width: 100%; }
+
+  .squeeze-title { font-size: 30px; }
+  .squeeze-sub { font-size: 15px; }
   .squeeze-cta { max-width: none; }
-  .squeeze-micro { margin-top: 10px; }
-  .squeeze-checks { flex-direction: column; gap: 8px; margin-top: 16px; }
-  .squeeze-trust-line { margin-top: 16px; }
-  .squeeze-cards { padding: 36px 16px 80px; }
-  .squeeze-card { padding: 0 0 20px; }
-  .squeeze-card-head { padding: 0 20px; }
-  .squeeze-card-desc { margin-left: 20px; margin-right: 20px; }
-  .squeeze-card-case { margin: 0 20px; padding: 12px 20px 0; }
+  .squeeze-mirror { font-size: 14px; }
+  .squeeze-bullets li { padding: 10px 14px; font-size: 14px; }
+
+  .squeeze-cards { padding: 44px 16px 80px; }
+  .squeeze-card-body { padding: 20px 20px 24px; }
+  .squeeze-card-head { font-size: 16px; }
+  .squeeze-card-desc { font-size: 14px; }
+
+  .squeeze-trust-block { padding: 28px 20px; }
+  .squeeze-metrics-row { gap: 16px; }
+  .squeeze-metric-num { font-size: 34px; }
+  .squeeze-metric-label { font-size: 11px; }
+
+  .squeeze-checks { flex-direction: column; gap: 8px; }
+  .squeeze-cta-second { max-width: none; }
 }
