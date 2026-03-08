@@ -193,54 +193,60 @@ export default function SqueezePage() {
         <div className="squeeze-cards-inner">
           <h2 className="squeeze-cards-title sq-anim sq-anim--fade-up">Что именно ты получишь</h2>
 
-          {[
-            {
-              screenshot: '/images/artifacts/pl-calendar.png',
-              alt: 'Шаблон P&L',
-              icon: <IconPL />,
-              head: 'Шаблон P&L и платёжного календаря',
-              desc: 'Открываешь файл и видишь бизнес в цифрах: где горит маржа, где заморожены деньги, какие продукты тянут вниз.',
-              result: '+20% маржа за 3 месяца',
-              quote: '«Убрал 3 продукта, которые работали в минус — и цифры сразу встали на место»',
-              cite: 'Михаил · мебельное производство',
-            },
-            {
-              screenshot: '/images/artifacts/delegation-matrix.png',
-              alt: 'Матрица делегирования',
-              icon: <IconDelegate />,
-              head: 'Матрица делегирования',
-              desc: 'Перестаёшь быть диспетчером. Сотрудники приходят не с вопросом «что делать?», а с вариантами решений.',
-              result: '20 → 100 менеджеров на удалёнке',
-              quote: '«Я перестал тащить каждого на себе. Команда работает сама.»',
-              cite: 'Роман Шолохов · B2B-продажи',
-            },
-            {
-              screenshot: '/images/artifacts/traction-map.png',
-              alt: 'Трекшн-карта',
-              icon: <IconSprint />,
-              head: 'Шаблон трекшн-карты',
-              desc: '60 минут в понедельник — и неделя под контролем. Измеримые задачи, конкретный результат в пятницу.',
-              result: '2–4 часа в день при 1.5 млн чистыми',
-              quote: '«Только жёсткий недельный ритм — и я вышел из операционки.»',
-              cite: 'Андрей · маркетинговое агентство, 5 человек',
-            },
-          ].map((card, i) => (
-            <div className="squeeze-card sq-anim sq-anim--fade-up" key={i} style={{ animationDelay: `${i * 0.1}s` }}>
-              <div className="squeeze-card-screenshot">
-                <img src={card.screenshot} alt={card.alt} />
+          <div className="squeeze-cards-grid">
+            {[
+              {
+                screenshot: '/images/artifacts/pl-calendar.png',
+                alt: 'Шаблон P&L',
+                icon: <IconPL />,
+                head: 'P&L и платёжный календарь',
+                desc: 'Таблица, которая показывает реальные деньги бизнеса, а не просто остаток на счёте. Подсвечивает кассовые разрывы и направления, съедающие вашу прибыль.',
+                result: 'Нашли дыру в маржинальности',
+                quote: '«Мы оцифровали расходы и ахнули: 3 продукта из 8 генерировали одни убытки. Отрезали их — маржа выросла с 10% до 30% без вливаний в маркетинг.»',
+                cite: 'Михаил · владелец мебельного производства',
+              },
+              {
+                screenshot: '/images/artifacts/delegation-matrix.png',
+                alt: 'Матрица делегирования',
+                icon: <IconDelegate />,
+                head: 'Матрица делегирования',
+                desc: 'Простой фреймворк, чтобы перестать быть «горлышком бутылки». Учит команду приходить не с проблемами («шеф, всё сломалось»), а с готовыми вариантами решений.',
+                result: 'От 20 до 100 человек без выгорания',
+                quote: '«Раньше весь день состоял из ответов на мелкие вопросы. Внедрил матрицу — и теперь они решают 90% задач сами. Без неё я бы просто жил в офисе.»',
+                cite: 'Роман Шолохов · фаундер B2B-компании',
+              },
+              {
+                screenshot: '/images/artifacts/traction-map.png',
+                alt: 'Трекшн-карта',
+                icon: <IconSprint />,
+                head: 'Трекшн-карта (спринты)',
+                desc: 'Замена бесконечным планёркам. Один час в понедельник на постановку целей — и в пятницу вы принимаете твёрдый результат вместо рассказов о том, как все старались.',
+                result: 'Выход из операционки',
+                quote: '«Ушёл хаос. У каждого есть чёткий план на неделю, никто никого не дёргает. Агентство работает, а я трачу на контроль всего 2–4 часа в день.»',
+                cite: 'Андрей · руководитель маркетингового агентства',
+              },
+            ].map((card, i) => (
+              <div className="squeeze-card sq-anim sq-anim--fade-up" key={i} style={{ animationDelay: `${i * 0.1}s` }}>
+                <div className="squeeze-card-screenshot">
+                  <img src={card.screenshot} alt={card.alt} />
+                </div>
+                <div className="squeeze-card-body">
+                  <div className="squeeze-card-icon">{card.icon}</div>
+                  <h3 className="squeeze-card-head">{card.head}</h3>
+                  <p className="squeeze-card-desc">{card.desc}</p>
+                  <blockquote className="squeeze-card-quote">
+                    <span className="squeeze-card-quote-result">{card.result}</span>
+                    <p>{card.quote}</p>
+                    <cite>{card.cite}</cite>
+                  </blockquote>
+                  <a href={TELEGRAM_BOT_URL} className="squeeze-card-cta" target="_blank" rel="noopener noreferrer">
+                    <TelegramIcon />
+                    Забрать шаблоны
+                  </a>
+                </div>
               </div>
-              <div className="squeeze-card-body">
-                <div className="squeeze-card-icon">{card.icon}</div>
-                <h3 className="squeeze-card-head">{card.head}</h3>
-                <p className="squeeze-card-desc">{card.desc}</p>
-                <blockquote className="squeeze-card-quote">
-                  <span className="squeeze-card-quote-result">{card.result}</span>
-                  <p>{card.quote}</p>
-                  <cite>{card.cite}</cite>
-                </blockquote>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
 
           {/* Блок доверия */}
           <div className="squeeze-trust-block sq-anim sq-anim--fade-up">
