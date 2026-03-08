@@ -24,6 +24,27 @@ html {
   background: #94a3b8;
 }
 
+/* === Dark theme (MicroLanding) === */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background-color: #16131b;
+  color: #e2e8f0;
+}
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #16131b;
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 4px;
+}
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
+html[data-theme="dark"] ::selection {
+  background: rgba(251, 191, 36, 0.35);
+  color: #fff;
+}
+
 /* === Typography Prose (replaces @tailwindcss/typography) === */
 .prose p {
   margin-bottom: 1.25em;

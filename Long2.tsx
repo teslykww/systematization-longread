@@ -87,7 +87,7 @@ const BackToTop = () => {
 // ─── Floating Nav ───
 const FloatingNav = () => {
   const [active, setActive] = useState('');
-  const ids = ['trap', 'wanted', 'why', 'results', 'process', 'proof', 'value', 'not-for', 'next', 'workbook', 'form'];
+  const ids = ['trap', 'wanted', 'why', 'results', 'process', 'proof', 'value', 'not-for', 'next', 'urgency', 'workbook', 'form'];
   useEffect(() => {
     const onScroll = () => {
       for (const id of [...ids].reverse()) {
@@ -98,7 +98,7 @@ const FloatingNav = () => {
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
-  const labels: Record<string, string> = { trap: 'Ловушка', wanted: 'Цель', why: 'Почему', results: 'Результаты', process: 'Процесс', proof: 'Доказательства', value: 'Ценность', 'not-for': 'Не для', next: 'Дальше', workbook: 'Workbook', form: 'Записаться' };
+  const labels: Record<string, string> = { trap: 'Ловушка', wanted: 'Цель', why: 'Почему', results: 'Результаты', process: 'Процесс', proof: 'Доказательства', value: 'Ценность', 'not-for': 'Не для', next: 'Дальше', urgency: 'Срочность', workbook: 'Workbook', form: 'Записаться' };
   return (
     <nav className="hidden lg:flex fixed top-1/2 -translate-y-1/2 right-6 z-40 flex-col gap-3">
       {ids.map(id => (
@@ -267,24 +267,27 @@ export default function Long2() {
           <h2 className="text-3xl md:text-5xl font-black mb-6 font-serif leading-tight">Ты застрял в <Marker color="bg-red-200">Ловушке Собственника</Marker></h2>
         </div>
 
-        <div className="space-y-4 mb-8">
-          {[
-            'Работаешь больше всех в компании',
-            'Принимаешь 90% решений сам',
-            'Не можешь уехать в отпуск без телефона',
-            'Каждый новый клиент = больше работы для тебя',
-            'Рост = ещё больше хаоса и переработок',
-          ].map((t, i) => (
-            <div key={i} className="flex items-start gap-3 text-lg text-slate-700">
-              <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
-              <span>{t}</span>
-            </div>
-          ))}
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-8 md:gap-10">
+          <div className="space-y-4 flex-1 md:max-w-xl">
+            {[
+              'Работаешь больше всех в компании',
+              'Принимаешь 90% решений сам',
+              'Не можешь уехать в отпуск без телефона',
+              'Каждый новый клиент = больше работы для тебя',
+              'Рост = ещё больше хаоса и переработок',
+            ].map((t, i) => (
+              <div key={i} className="flex items-start gap-3 text-lg text-slate-700">
+                <XCircle className="w-6 h-6 text-red-500 shrink-0 mt-0.5" />
+                <span>{t}</span>
+              </div>
+            ))}
+          </div>
+          <div className="md:shrink-0 md:flex md:justify-end">
+            <StickyNote title="РЕЗУЛЬТАТ" color="bg-red-50">
+              Ты не владелец бизнеса. Ты самый высокооплачиваемый сотрудник. И даже не самый высокооплачиваемый, если посчитать на час.
+            </StickyNote>
+          </div>
         </div>
-
-        <StickyNote title="РЕЗУЛЬТАТ" color="bg-red-50">
-          Ты не владелец бизнеса. Ты самый высокооплачиваемый сотрудник. И даже не самый высокооплачиваемый, если посчитать на час.
-        </StickyNote>
       </AnimatedSection>
 
       {/* ═══ ЧТО ТЫ РЕАЛЬНО ХОЧЕШЬ ═══ */}
@@ -366,15 +369,15 @@ export default function Long2() {
           <h3 className="text-2xl font-black font-serif mb-8 text-center">Результаты клиентов</h3>
           <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true }} className="grid md:grid-cols-2 gap-6">
             {[
-              { photo: '/images/case-dmitriy.png', tag: 'Маркетинговое агентство', rev: '8 млн/мес', problem: 'Собственник вёл 60% встреч', result: 'РОП закрывает 50% встреч, освободилось 12 ч/нед', nums: '+1.8 млн/мес прибыли' },
-              { photo: '/images/case-elena.png', tag: 'E-commerce', rev: '12 млн/мес', problem: '«Нужно больше трафика»', result: 'Запустили retention, repeat rate 15%→38%', nums: '+2.2 млн/мес без нового трафика' },
-              { photo: '/images/case-anastasia.png', tag: 'Онлайн-школа', rev: '6 млн/мес', problem: 'Конверсия 8%', result: 'Конверсия выросла до 18% за 3 недели', nums: '+2.4 млн/мес, никого не наняли' },
-              { photo: '/images/case-viktor.png', tag: 'B2B-услуги', rev: '15 млн/мес', problem: 'Собственник вёл все переговоры', result: 'РОП ведёт все созвоны, конверсия 52%', nums: 'Освободили 20 ч/нед, +4 млн/мес новое направление' },
+              { photo: '/images/case-mikhail.png?v=3', tag: 'Мебельная фабрика', rev: 'Производство', problem: 'Собственник 14ч/день в цеху', result: 'Начальник производства, Михаил в офис', nums: '+52% выручка, 14ч→6ч операционка' },
+              { photo: '/images/case-alexandr.png?v=5', tag: 'Интегратор CRM', rev: 'B2B-услуги', problem: 'CRM не работала, лиды терялись', result: 'Воронка прозрачна, регламенты', nums: '+40% конверсия, 12 ч/нед освободил' },
+              { photo: '/images/case-mariya.png?v=4', tag: 'Юридические услуги', rev: 'Юрист', problem: 'Всё через Марию, клиенты ждут', result: 'Стандартизация, шаблоны, ассистент', nums: 'x2 пропускная способность, +35% выручка' },
+              { photo: '/images/case-sergey.png?v=2', tag: 'Системы отопления и инженерии', rev: 'Строительство', problem: 'Кассовые разрывы, оборот ради оборота', result: 'Платёжный календарь, маржинальные объекты', nums: '+1.2 млн чистыми, 100% прозрачность' },
             ].map((c, i) => (
               <motion.div key={i} variants={fadeUp}>
                 <TiltCard className="bg-white rounded-xl border border-slate-200 shadow-sm hover:border-slate-900 overflow-hidden h-full">
                   <div className="relative w-full aspect-[4/3] overflow-hidden">
-                    <img src={c.photo} alt="" className="w-full h-full object-cover object-top" loading="lazy" />
+                    <img src={c.photo} alt={`Кейс: ${c.tag} — ${c.rev}`} className="w-full h-full object-cover object-top" loading="lazy" />
                     <div className="absolute top-3 right-3 bg-white/90 px-3 py-1 rounded-full text-[10px] font-mono">{c.tag} • {c.rev}</div>
                   </div>
                   <div className="p-5">
@@ -392,7 +395,7 @@ export default function Long2() {
 
         {/* Детальный кейс с механикой */}
         <div className="mt-12">
-          <h4 className="text-xl font-black font-serif mb-4 text-center">Как именно решали — пример (онлайн-школа, 6 млн/мес)</h4>
+          <h4 className="text-xl font-black font-serif mb-4 text-center">Как именно решали — пример из другой ниши (онлайн-школа, 6 млн/мес)</h4>
           <TiltCard className="bg-white rounded-xl border-2 border-blue-100 overflow-hidden">
             <div className="p-6 md:p-8">
               <div className="text-sm font-bold text-red-600 mb-2">Проблема:</div>

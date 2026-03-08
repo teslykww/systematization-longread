@@ -68,6 +68,42 @@ export const Marker: React.FC<{ children: React.ReactNode; color?: string }> = (
   </span>
 );
 
+// ─── Typed Text Effect ───
+export const TypedText: React.FC<{ texts: string[]; className?: string }> = ({ texts, className = "" }) => {
+  const [textIndex, setTextIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = texts[textIndex];
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (charIndex < current.length) {
+          setCharIndex(c => c + 1);
+        } else {
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        if (charIndex > 0) {
+          setCharIndex(c => c - 1);
+        } else {
+          setIsDeleting(false);
+          setTextIndex(i => (i + 1) % texts.length);
+        }
+      }
+    }, isDeleting ? 30 : 80);
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, textIndex, texts]);
+
+  return (
+    <span className={className}>
+      {texts[textIndex].substring(0, charIndex)}
+      <span className="inline-block w-[3px] h-[1em] bg-red-500 ml-0.5 animate-pulse align-middle"></span>
+    </span>
+  );
+};
+
 export const HandwrittenNote: React.FC<{ children: React.ReactNode; rotate?: number; className?: string }> = ({ children, rotate = -2, className = "" }) => (
   <div 
     className={`font-hand text-2xl md:text-3xl text-blue-600 leading-tight transform ${className}`}
@@ -77,13 +113,22 @@ export const HandwrittenNote: React.FC<{ children: React.ReactNode; rotate?: num
   </div>
 );
 
-export const StickyNote: React.FC<{ children: React.ReactNode; title?: string; color?: string }> = ({ children, title, color = "bg-yellow-100" }) => (
-  <div className={`${color} p-6 shadow-md rotate-1 border border-black/5 relative max-w-sm mx-auto my-8 font-hand text-xl text-slate-800`}>
-    <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 bg-black/5 opacity-20 rotate-1"></div>
-    {title && <div className="font-bold text-2xl mb-2 text-red-600 uppercase tracking-widest font-sans">{title}</div>}
-    {children}
-  </div>
-);
+export const StickyNote: React.FC<{ children: React.ReactNode; title?: string; color?: string; variant?: 'light' | 'dark' }> = ({ children, title, color, variant = 'light' }) => {
+  const isDark = variant === 'dark';
+  const bgColor = color ?? (isDark ? 'bg-slate-800' : 'bg-yellow-100');
+  const borderColor = isDark ? 'border-slate-600' : 'border-black/5';
+  const textColor = isDark ? 'text-slate-200' : 'text-slate-800';
+  const titleColor = isDark ? 'text-amber-400' : 'text-red-600';
+  const topBarClass = isDark ? 'bg-slate-700/50' : 'bg-black/5';
+
+  return (
+    <div className={`${bgColor} p-6 shadow-md rotate-1 border ${borderColor} relative max-w-sm mx-auto my-8 font-hand text-xl ${textColor}`}>
+      <div className={`absolute -top-3 left-1/2 -translate-x-1/2 w-32 h-8 ${topBarClass} opacity-20 rotate-1`}></div>
+      {title && <div className={`font-bold text-2xl mb-2 ${titleColor} uppercase tracking-widest font-sans`}>{title}</div>}
+      {children}
+    </div>
+  );
+};
 
 export const Card: React.FC<{ children: React.ReactNode; className?: string; border?: boolean }> = ({ children, className = "", border = true }) => (
   <div className={`bg-white rounded-xl p-6 md:p-10 ${border ? 'border border-slate-200 shadow-sm' : ''} ${className}`}>
